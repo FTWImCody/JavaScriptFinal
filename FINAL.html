@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>JavaScript/JQuery Final</title>
+    <script src="../JS/jquery-3.3.1.min.js"></script>
+</head>
+
+<body>
+    <!--USER Interaction-->
+    <h1>First Interaction - Click</h1 <p>Click the Button below to see some cool stuff :P</p>
+    <button id="click">CLICK ME!</button>
+    <div id="coolstuff"></div>
+    <script>
+        var img = document.createElement("img"); //Creates an image and sets it's source to folder "../Images/cat.jpg"
+        img.src = "../Images/cat.jpg"
+        img.height = 100;
+        img.width = 200;
+
+
+        document.getElementById("click").addEventListener("click", onClick);
+
+        function onClick() {
+            document.getElementById("coolstuff").appendChild(img) //Adds the image into the div tag as a new child
+        }
+    </script>
+    <h1>Second Interaction - MouseOver</h1>
+    <p>Try to click the red button below!</p>
+    <p>HINT: It's impossible!</p>
+    <img id="1" src="../Images/button.png">
+    <script>
+        document.getElementById("1").addEventListener("mouseover", onHover);
+
+        function onHover() {
+            document.getElementById("1").src = ""; //removes image from the screen when you go to hover it
+        }
+    </script>
+    <h1>Third Interaction - KeyDown</h1>
+    <p>Please enter your name!</p>
+    <input type="text" id="input">
+    <div id="gotcha"></div>
+    <script>
+        document.getElementById("input").addEventListener("keydown", keyDown);
+
+        function keyDown() {
+            document.getElementById("gotcha").textContent = "I made you do it!"; //when you press a key in the input box it prints message "I made you do it!"
+        }
+    </script>
+    <h1>Fourth Interaction - Copy</h1>
+    <p id="copy">Copy this to see the event in action!</p>
+    <p id="copyoutput"></p>
+    <script>
+        document.getElementById("copy").addEventListener("copy", onCopy);
+
+        function onCopy() {
+            document.getElementById("copyoutput").textContent = "You copied it!"; //when user CTRL+C or right click > Copy, it prints a message telling user they copied on the <p> tag with id of copy
+        }
+    </script>
+    <h1>Fifth Interaction - Paste</h1>
+    <p>Paste what you copied from the last interaction</p>
+    <input id="paste" type="text">
+    <p id="pasteoutput"></p>
+    <script>
+        document.getElementById("paste").addEventListener("paste", onPaste); //when user CTRL+V or right click > Paste, it prints a message telling user they pasted in the <input> tag with id of paste
+
+        function onPaste() {
+            document.getElementById("pasteoutput").textContent = "You know how to paste to?!?";
+        }
+    </script>
+    <h1>Sixth Interaction - Change</h1>
+    <input id="check" type="checkbox">Check me please!</input>
+    <p id="chout"></p>
+    <script>
+        document.getElementById("check").addEventListener("change", onChange);
+
+        function onChange() {
+            document.getElementById("chout").textContent = "Oh hi, thanks for checking in , I'm still a piece of garbage - Bill Wurtz" //prints a message on screen when user checks the checkbox
+        }
+    </script>
+
+    <!--JQUERY Calls-->
+    <h1>First JQuery Call - Double Click</h1>
+    <p id="dblclick">DOUBLE CLICK ME!</p>
+    <script>
+        $(document).ready(function() {
+            $("#dblclick").dblclick(function() {
+                $(this).text("You have double clicked me!"); //prints a message when the user double clicks the <p> tag with id of dblclick
+            });
+        });
+    </script>
+    <h1>Second JQuery Call - Mouse Enter/Leave</h1>
+    <img id="cat2" src="../Images/cat2.jpg" height=100px, width=a uto>
+    <script>
+        $(document).ready(function() { // script changes size of image when user hovers over it and when they hover off of it
+            $("#cat2").mouseover(function() {
+                $(this).height(200);
+            });
+            $("#cat2").mouseout(function() {
+                $(this).height(100);
+            });
+        });
+    </script>
+    <!--Anonymous Function-->
+    <h1>Third JQuery Call - Resize</h1>
+    <p>Resize the Browser window to demonstrate this Jquery call..</p>
+    <p id="resizeout"></p>
+    <script>
+        var x = 0; //Counts the number of times the user resizes the browser window and prints it in the <p> tag
+        var resizeFunc = function() { //<--- Anonymous Function
+            $(window).resize(function() {
+                x++;
+                $("#resizeout").text("You resized the window " + x + " times.");
+            });
+        }
+        $(document).ready(resizeFunc());
+    </script>
+
+
+    <!--FORM Validation-->
+    <h1>Form Validation</h1>
+    <form name="FormValidate" method="get">
+        First name:<br>
+        <input type="text" name="firstname" required><br>
+        <p>Last name:<br>
+            <input type="text" name="lastname" required>
+            <br><br>
+            <input id="submit" type="submit">
+    </form>
+    <!--ERROR Handling-->
+    <h1>ERROR Handling</h1>
+    <p id="demo"></p>
+    <script>
+        try {
+            adddlert("Hello World..");
+        } catch (err) {
+            document.getElementById("demo").innerHTML = err.message; //spelled addAlert wrong so created a try catch so it doesn't crash the rest of the code
+        }
+    </script>
+
+    <!--Truthy/Falsey Statement-->
+    <h1>Truthy/Falsey Statement</h1>
+    <p>What do they like?</p>
+    <p>1. Greg</p>
+    <p>2. Chris</p>
+    <p>3. Jimmy</p>
+    <p>4. John</p>
+    <p>Enter a number from above:</p>
+    <input id="numb">
+    <button type="button " id="onClick">Submit</button>
+    <p id="output"></p>
+    <script>
+        var greg = {
+            name: "Greg" //falsy
+        };
+        var chris = {
+            name: "Chris",
+            likes: "Nascar and Barbeques" //truthy
+        };
+        var jimmy = {
+            name: "Jimmy",
+            likes: "making YouTube videos and money.." //truthy
+        };
+        var john = {
+            name: "John",
+            likes: "" //falsy
+        };
+
+        function checkLikes(person) {
+            if (person.likes) {
+                $("#output").text(person.name + " really likes " + person.likes + ".");
+            } else {
+                $("#output").text(person.name + " does not like anything.")
+            }
+        }
+        $("#onClick").click(function() {
+            var x, text;
+
+            // Get the value of the input field with id="numb"
+            x = document.getElementById("numb").value;
+            console.log(x);
+
+            // If x is Not a Number or less than one or greater than 4
+            if (isNaN(x) || x < 1 || x > 4) {
+                text = "Input not valid";
+                $("#output").text(text);
+            } else {
+                if (x == 1) {
+                    checkLikes(greg);
+                } else if (x == 2) {
+                    checkLikes(chris);
+                } else if (x == 3) {
+                    checkLikes(jimmy);
+                } else if (x == 4) {
+                    checkLikes(john);
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
